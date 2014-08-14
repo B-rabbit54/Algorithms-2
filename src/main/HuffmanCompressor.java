@@ -55,7 +55,6 @@ public class HuffmanCompressor implements CompressorInterface {
 		Bits bits = new Bits();
 		byte[] uncompressedBytes = new byte[uncompressedLength];
 		String stringBinary = createBinaryString(b);
-		System.out.println(stringBinary);
 		bits = createBits(stringBinary);
 		
 		for(int i = 0; i < uncompressedLength; i++)

@@ -5,9 +5,10 @@ import java.util.PriorityQueue;
 import edu.neumont.io.Bits;
 
 public class HuffmanTree implements TreeInterface {
+	int alphabetSize = 256;
 	byte[] bytes;
-	int[] frequencyList = new int[256];
-	Bits[] EncodeLookUpTable = new Bits[256];
+	int[] frequencyList = new int[alphabetSize];
+	Bits[] EncodeLookUpTable = new Bits[alphabetSize];
 	PriorityQueue<Node> queue =  new PriorityQueue<Node>();
 	Node root;
 	Bits encodeBits = new Bits();
@@ -25,29 +26,29 @@ public class HuffmanTree implements TreeInterface {
 	private void frequencyListMaker(byte[] list)
 	{
 		
-		for(int i = 0; i < 256; i++)
+		for(int i = 0; i < alphabetSize; i++)
 		{
 			frequencyList[i] = 0;
 		}		
 		for(int i = 0; i < list.length; i++)
 		{
-			frequencyList[(int)list[i]]++;
+			frequencyList[(int)list[i] + 128]++;
 		}
 		
 	}
 	
-	private Bits change(Bits b, Bits b2)
-	{
-		while(b2.size() > 0)
-		{
-			System.out.println("1");
-			boolean bool = b2.poll();
-			b.add(bool);
-		}
-		
-		return b;
-		
-	}
+//	private Bits change(Bits b, Bits b2)
+//	{
+//		while(b2.size() > 0)
+//		{
+//			System.out.println("1");
+//			boolean bool = b2.poll();
+//			b.add(bool);
+//		}
+//		
+//		return b;
+//		
+//	}
 	
 	private void buildCode(Bits[] codeMap, Node node, String Code) {
 //		Bits b = new Bits();
@@ -64,7 +65,7 @@ public class HuffmanTree implements TreeInterface {
 		else
 		{
 			
-			codeMap[node.getValue()] = makebits(Code);
+			codeMap[node.getValue() + 128] = makebits(Code);
 			//printBits(bits, node.getValue());
 		}
     }
@@ -141,7 +142,7 @@ public class HuffmanTree implements TreeInterface {
 		{
 			if(freqList[i] > 0)
 			{
-				Node node = new Node((byte)i, freqList[i], null, null);
+				Node node = new Node((byte)(i -128), freqList[i], null, null);
 				queue.add(node);
 			}
 		}
@@ -174,36 +175,8 @@ public class HuffmanTree implements TreeInterface {
 	@Override
 	public byte toByte(Bits bits) {
 		
-
 		boolean byteFound = false;
 		byte Byte = newToByte(bits, root, byteFound);
-		
-//		byte Byte = 0;
-//		boolean traverse = false;
-//		Node n = root;
-//		if(bits.size() > 0 && !byteFound)
-//		{
-//			while(!byteFound)
-//			{	
-//				if(n.isLeaf())
-//				{
-//					Byte = n.getValue();
-//					byteFound = true;
-//				}
-//				else
-//				{
-//					traverse = bits.poll();
-//					if(traverse)
-//					{
-//						n = n.getRight();
-//					}
-//					else
-//					{
-//						n = n.getLeft();
-//					}
-//				}
-//			}
-//		}
 		return Byte;
 	}
 	
@@ -238,7 +211,7 @@ public class HuffmanTree implements TreeInterface {
 	public void fromByte(byte b, Bits bits) 
 	{
 		Bits encodedBit = new Bits();
-			encodedBit.addAll(EncodeLookUpTable[b]);
+			encodedBit.addAll(EncodeLookUpTable[(int)b +128]);
 		
 		while(encodedBit.size() > 0)
 		{

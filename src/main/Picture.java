@@ -22,7 +22,7 @@ public class Picture {
 
 			// convert BufferedImage to byte array
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(originalImage, "jpg", baos);
+			ImageIO.write(originalImage, ".huff", baos);
 			baos.flush();
 			imageInByte = baos.toByteArray();
 			baos.close();
@@ -32,16 +32,15 @@ public class Picture {
 		}
 		return imageInByte;
 	}
-	public void createImage(byte[] imageInByte)
+	public void createImage(byte[] imageInByte, String location)
 	{
 		InputStream in = new ByteArrayInputStream(imageInByte);
 		BufferedImage bImageFromConvert;
 		try {
 			bImageFromConvert = ImageIO.read(in);
-		
 
 		ImageIO.write(bImageFromConvert, "jpg", new File(
-				"c:/Uncompressed.jpg"));
+				location));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
