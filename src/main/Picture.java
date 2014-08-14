@@ -6,10 +6,27 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
 public class Picture {
+	
+	public byte[] getCompressedByte(String location)
+	{
+		Path path = Paths.get(location);
+		byte[] bits = null;
+		try {
+			bits = Files.readAllBytes(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bits;
+		
+	}
 	
 	public byte[] getByteArray(String location)
 	{
@@ -22,7 +39,7 @@ public class Picture {
 
 			// convert BufferedImage to byte array
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(originalImage, ".huff", baos);
+			ImageIO.write(originalImage, "jpg", baos);
 			baos.flush();
 			imageInByte = baos.toByteArray();
 			baos.close();

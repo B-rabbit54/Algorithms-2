@@ -90,7 +90,7 @@ public class TreeTest {
 		
 		HuffmanTree tree = new HuffmanTree(b3);
 		Picture picture = new Picture();
-		byte[] compressedPicture = picture.getByteArray("compressed.huff");
+		byte[] compressedPicture = picture.getCompressedByte("compressed.huff");
 		HuffmanCompressor compress = new HuffmanCompressor();
 		byte [] decompressedPic = compress.decompress(tree, 54679, compressedPicture);
 		picture.createImage(decompressedPic, "secret.jpg");
